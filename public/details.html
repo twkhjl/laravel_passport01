@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <h3>detail</h3>
+
+    <script
+    src="https://code.jquery.com/jquery-3.2.1.min.js"
+    integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
+    crossorigin="anonymous"></script>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <script>
+
+
+
+    // axios.get('/api/details',
+    //     {
+    //         headers : {
+    //             'Content-Type' : 'application/json',
+    //             'Accept' : 'application/json',
+    //             'Authorization' : 'Bearer ...PERSONAL ACCESS TOKEN HERE...'
+    //         }
+    //     })
+    //     .then((res) => {
+    //         console.log(res.data);
+    //     })
+
+        $.ajax({
+            type:"POST",
+			url:"http://testapiauth.dev/oauth/token",
+            headers: {
+                'Accept': 'application/json',
+                'Authorization' : 'testApp_internal O2e4ElTa82SbhsR5gD92CQrLu6s2G5lgbIgWSngo',
+            },
+            data:{
+                'grant_type':'password',
+                'client_id':'3',
+                'client_secret':'O2e4ElTa82SbhsR5gD92CQrLu6s2G5lgbIgWSngo',
+                'username':'user2@mail.com',
+                'password':'password'
+            },
+			success:function(data,status,xhr){
+                $access_token = data['access_token'];
+                $.ajax({
+                    type:"POST",
+                url:"http://testapiauth.dev/api/details",
+                headers: {
+                    'Accept': 'application/json',
+                    'Authorization' : 'Bearer '+  $access_token,
+                     },
+                success:function(data){
+                    console.log(data);
+                }
+                });
+
+			},
+
+			error:function(xhr){
+				console.log(xhr);
+				console.log(xhr.status);
+				console.log(xhr.statusText);
+				console.log(xhr.responseText);
+			}
+		})
+
+    </script>
+</body>
+</html>
